@@ -13,6 +13,9 @@ Please download pDeepXL from [https://github.com/pFindStudio/pDeepXL/raw/master/
 
 * Python >=3.6.9
 * PyTorch >= 1.0.1
+* tqdm >= 4.45.0
+* seaborn >= 0.9.0
+* sklearn >= 0.21.2
 
 Anaconda enviroment is recommended.
 
