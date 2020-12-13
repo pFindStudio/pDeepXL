@@ -6,7 +6,7 @@ In cross-linking mass spectrometry, identification of cross-linked peptide pairs
 
 ## Download
 
-Please download pDeepXL from [http://pfind.ict.ac.cn/software/pDeepXL/pDeepXL.zip](http://pfind.ict.ac.cn/software/pDeepXL/pDeepXL.zip), which contains the source code and test datasets.
+Please download pDeepXL from [https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip), which contains the source code and test datasets.
 
 
 ## Dependencies
@@ -74,9 +74,9 @@ You can predict MS/MS spectra for cross-linked peptide pairs with following step
 4. 
     After that, images of predicted spectra for all cross-linked peptide pairs will be generated in the `path_img_folder` you specified. The name of each image is the `title` of each line in `path_data_file`. Here are two examples, one for DSS and the other for DSSO.
 
-    ![HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png](datasets/non_cleavable/predict_results/imgs/HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png)
+    ![HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png](http://pfind.ict.ac.cn/software/pDeepXL/imgs/HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png)
 
-    ![HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png](datasets/cleavable/predict_results/imgs/HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png)
+    ![HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png](http://pfind.ict.ac.cn/software/pDeepXL/imgs/HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png)
 
 
 ## Citation
