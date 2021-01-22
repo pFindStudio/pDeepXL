@@ -1,0 +1,7 @@
+README.md
+setup.py
+pDeepXL/__init__.py
+pDeepXL.egg-info/PKG-INFO
+pDeepXL.egg-info/SOURCES.txt
+pDeepXL.egg-info/dependency_links.txt
+pDeepXL.egg-info/top_level.txt
