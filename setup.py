@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pDeepXL",
-    version="1.0.1",
+    version="1.1.0",
     author="Zhenlin Chen",
     author_email="chenzhenlin@ict.ac.cn",
     description="MS/MS spectrum prediction for cross-linked peptide pairs by deep learning",

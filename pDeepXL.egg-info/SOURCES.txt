@@ -1,6 +1,12 @@
 README.md
 setup.py
 pDeepXL/__init__.py
+pDeepXL/featurer.py
+pDeepXL/mass_util.py
+pDeepXL/model.py
+pDeepXL/plot.py
+pDeepXL/predict.py
+pDeepXL/utils.py
 pDeepXL.egg-info/PKG-INFO
 pDeepXL.egg-info/SOURCES.txt
 pDeepXL.egg-info/dependency_links.txt
