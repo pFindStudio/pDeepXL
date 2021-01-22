@@ -206,6 +206,7 @@ def plot_batch(path_pLink2_match_info, path_img_folder):
 
 
 def plot_single(title,prec_charge,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2,pred_matrix,path_fig):
+    print('start plotting...')
     pep_pair=crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2
     if crosslinker=='DSSO' or crosslinker=='DSBU':
         plot_clv_single(title,pep_pair,prec_charge,pred_matrix,path_fig)
@@ -213,3 +214,4 @@ def plot_single(title,prec_charge,crosslinker,seq1,mods1,linksite1,seq2,mods2,li
         plot_non_clv_single(title,pep_pair,prec_charge,pred_matrix,path_fig)
     else:
         print('do not support %s cross-linker'%crosslinker)
+    print('plot done.')

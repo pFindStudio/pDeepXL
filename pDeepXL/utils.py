@@ -18,10 +18,15 @@ import torch.nn.utils.rnn as rnn_utils
 import re
 import logging
 import bisect
+import pkg_resources # https://stackoverflow.com/a/16892992
+path_config = pkg_resources.resource_filename('pDeepXL', 'configs/config.ini')
 
-
+# print('-1-')
+# print(path_config)
+# print('-2-')
 config = configparser.ConfigParser()
-path_config=r'pDeepXL/configs/config.ini' # 在当前项目下，绝对路径要从项目根目录pDeepXL开始
+# print(os.path.abspath(os.getcwd()))
+# path_config=r'configs/config.ini' # 在当前项目下，绝对路径要从项目根目录pDeepXL开始
 # if os.path.isfile(path_config):
 #     print('config file exist')
 # else:

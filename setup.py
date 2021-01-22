@@ -1,11 +1,22 @@
 import setuptools
+import os
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+# https://stackoverflow.com/a/36693250
+def package_files(directory):
+    paths = []
+    for (path, directories, filenames) in os.walk(directory):
+        for filename in filenames:
+            paths.append(os.path.join('..', path, filename))
+    return paths
+
+extra_files = package_files('pDeepXL/examples')
+
 setuptools.setup(
     name="pDeepXL",
-    version="1.1.0",
+    version="1.1.2",
     author="Zhenlin Chen",
     author_email="chenzhenlin@ict.ac.cn",
     description="MS/MS spectrum prediction for cross-linked peptide pairs by deep learning",
@@ -13,6 +24,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/pFindStudio/pDeepXL",
     packages=setuptools.find_packages(),
+    package_data={'pDeepXL': ['configs/*','pt/*'] + extra_files},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

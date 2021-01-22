@@ -1,7 +1,9 @@
 import pDeepXL.utils as utils
 
-paa=r'pDeepXL/configs/aa.ini'
-pele=r'pDeepXL/configs/element.ini'
+import pkg_resources # https://stackoverflow.com/a/16892992
+
+paa=pkg_resources.resource_filename('pDeepXL', 'configs/aa.ini')
+pele=pkg_resources.resource_filename('pDeepXL', 'configs/element.ini')
 
 mpLinkerXLMass={'DSS':138.068,'Leiker':316.142,'SS':-2.016,'DSSO':158.004,'DSBU':196.085}
 mpClvLinkerLongShortMass={'DSSO':[85.983,54.011],'DSBU':[111.032,85.053]}

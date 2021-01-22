@@ -27,7 +27,8 @@ import torch.nn.utils.rnn as rnn_utils
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 config = configparser.ConfigParser()
-path_config=r'pDeepXL/configs/config.ini'
+import pkg_resources # https://stackoverflow.com/a/16892992
+path_config = pkg_resources.resource_filename('pDeepXL', 'configs/config.ini')
 # if os.path.isfile(path_config):
 #     print('config file exist')
 # else:
@@ -122,7 +123,10 @@ def get_model(is_non_cleavable):
     N_LAYERS = 2
     BIDIRECTIONAL = True
     DROPOUT = 0.5
-    path_model=r'pDeepXL/pt/non_clv_model.pt' if is_non_cleavable else r'pDeepXL/pt/clv_model.pt'
+
+    path_non_clv_model = pkg_resources.resource_filename('pDeepXL', 'pt/non_clv_model.pt')
+    path_clv_model = pkg_resources.resource_filename('pDeepXL', 'pt/clv_model.pt')
+    path_model=path_non_clv_model if is_non_cleavable else path_clv_model
 
     print('loading pretrained model...')
     model = BiLSTMLinearPredictor(INPUT_DIM, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
