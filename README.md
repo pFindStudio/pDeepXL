@@ -6,92 +6,268 @@ In cross-linking mass spectrometry, identification of cross-linked peptide pairs
 
 ## Installation
 
-pDeepXL can be installed from PyPI:
+Please install pDeepXL from PyPI:
 
-`pip install pDeepXL`
+```shell
+pip install pDeepXL
+```
 
-During installation, all required dependencies will be installed automatically.
+During installation, all required dependencies will be installed automatically. 
 
-Please also download the example dataset from here, which will be used in the following tutorial.
+Please also download example datasets from [here](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL/examples/examples.zip), which will be used in the following tutorial. There are two example datasets in the downloaded zip file, one is for non-cleavable cross-linkers DSS/Leiker (`examples/non_cleavable`), and the other is for cleavable cross-linkers DSSO/DSBU (`examples/cleavable`). For each dataset, there are 2 folders: the `data` folder contains 1 file with 15 cross-linked peptide pairs, and the `predict_results` folder contains predicted MS/MS spectra and the corresponding images.
 
-pDeepXL from [https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip), which contains the source code and test datasets.
+## Script mode
+
+For developers, pDeepXL can be easily integrated into a new python project. Once installation, import pDeepXL using two lines:
+
+```python
+import pDeepXL.predict
+import pDeepXL.plot
+```
+
+### Single prediction
+
+#### pDeepXL.predict.predict_single
+
+Use the function `pDeepXL.predict.predict_single` to predict a spectrum for a single cross-linked peptide pair.
+
+```python
+predictions=pDeepXL.predict.predict_single(prec_charge,instrument,NCE_low,NCE_medium,NCE_high,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2)
+```
+
+The arguments contain information about the input cross-linked peptide pair:
+
+* **prec_charge** (int): the precursor charge of the cross-linked peptide pair. Only charges in [2+, 5+] are supported.
+* **instrument** (str): the mass spectrometer name. Only instruments in ['QEPlus','QE','QEHF','QEHFX','Fusion','Lumos'] are supported.
+* **NCE_low, NCE_medium, NCE_high** (floats): the low, medium, and high normalized collision energies (NCE). Only NCEs in [0.0, 100.0] are supported.
+* **crosslinker** (str): the cross-linker name. Only cross-linkers in ['DSS','Leiker','DSSO','DSBU'] are supported.
+* **seq1** (str): the first sequence.
+* **mods1** (dict): the modifications on the first sequence, where the key is the position (zero-based numbering) of a modification, and the value is the corresponding modification name. For example, `{3: 'Carbamidomethyl[C]'}` means Carbamidomethyl modified the 4th Cys. Only modifications in ['Carbamidomethyl[C]','Oxidation[M]'] are support.
+* **linksite1** (int): the cross-linked site of the first sequence (also zero-based numbering).
+* **seq2** (str): same description to **seq1**.
+* **mods2** (dict): same description to **mods1**.
+* **linksite2** (int): same description to **linksite1**.
 
 
-## Dependencies
+Return value is a tuple containing 3 elements, where the last one is the predicted intensity matrix, which can be used to plot the predicted spectrum subsequently.
 
-* Python >=3.6.9
-* PyTorch >= 1.0.1
-* tqdm >= 4.45.0
-* seaborn >= 0.9.0
-* sklearn >= 0.21.2
+#### pDeepXL.plot.plot_single
 
-Anaconda enviroment is recommended.
+Use the function `pDeepXL.plot.plot_single` to plot a single predicted spectrum.
 
-## Predict
+```
+pDeepXL.plot.plot_single(title,prec_charge,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2,predictions[2],path_fig)
+```
 
-There are two test datasets in the downloaded pDeepXL.zip, one is for non-cleavable cross-linkers DSS/Leiker (`pDeepXL/datasets/non_cleavable`), and the other is for cleavable cross-linkers DSSO/DSBU (`pDeepXL/datasets/cleavable`). For each dataset, there are 3 folders: the `data` folder contains 1 file with 15 cross-linked peptide pairs, the `model` folder contains 1 file with the trained model, and the `predict_results` folder contains predicted MS/MS spectra and the corresponding images.
+The arguments contain information about the input cross-linked peptide pair:
 
-You can predict MS/MS spectra for cross-linked peptide pairs with following steps.
+* **title** (str): the title of the predicted spectrum.
+* **prec_charge,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2**: same descriptions to those for `pDeepXL.predict.predict_single`.
+* **predictions[2]** (tuple): the last element of the returned value of `pDeepXL.predict.predict_single`, and the tuple contains predicted intensity matrices for the first and the second sequences.
+* **path_fig** (str): the path of the figure to be generated.
 
-0. Activate your PyTorch environment and goto the `pDeepXL/model` folder
-1. Run `linear_predict.py` with following parameters to predict:
+#### Demonstration
 
-    ```
-    python linear_predict.py path_data_file path_predict_result_file path_model is_non_cleavable
-    ```
+For example, run the following python script to predict and plot the demo non-cleavable cross-linked peptide pair (**please use your local path**):
 
-    where:
-    * `path_data_file` is the path of test data file. Please make sure one line for one cross-linked peptide pair, each line contains 14 columns, and the `title` should be unique for each line. For details about the data format, please see the demo data file
-    * `path_predict_result_file` is the path of predicted result file
-    * `path_model` is the path of model file
-    * `is_non_cleavable` is whether the test data is for non-cleavable cross-linkers. `1` is for non-cleavable cross-linkers and `0` is for cleavable cross-linkers
+```python
+# input example of a non-cleavable cross-linked peptide pair
+# ecoli_enri0228_E_bin5_7ul.11740.11740.4.0.dta
+prec_charge,instrument,NCE_low,NCE_medium,NCE_high,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2=\
+4,'QE',0.0,27.0,0.0,'Leiker','EISCVDSAELGKASR',{3: 'Carbamidomethyl[C]'},11,'KIIIGK',{},0
+# please use your local path
+path_non_clv_fig=r'/pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/predicted_non_clv_spectrum.png'
+title='example of non-cleavable cross-linked spectrum'
 
-    For example, run the following command for the demo non-cleavable cross-linked dataset (**please use your local paths**):
+non_clv_predictions=pDeepXL.predict.predict_single(prec_charge,instrument,NCE_low,NCE_medium,NCE_high,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2)
+pDeepXL.plot.plot_single(title,prec_charge,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2,non_clv_predictions[2],path_non_clv_fig)
+```
 
-    ```
-    python linear_predict.py ../datasets/non_cleavable/data/non_clv_dataset.txt ../datasets/non_cleavable/predict_results/non_clv_predicted_res.txt ../datasets/non_cleavable/model/non_clv_model.pt 1
-    ```
+Run the following python script to predict and plot the demo cleavable cross-linked peptide pair (**please use your local path**):
 
-    or run the following command for the demo cleavable cross-linked dataset (**please use your local paths**):
+```python
+# input example of a cleavable cross-linked peptide pair
+# HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta
+prec_charge,instrument,NCE_low,NCE_medium,NCE_high,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2=\
+3,'Lumos',21.0,27.0,33.0,'DSSO','VLLDVKLK',{},5,'EVASAKPK',{},5
+# please use your local path
+path_clv_fig=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predicted_clv_spectrum.png'
+title='example of cleavable cross-linked spectrum'
 
-    ```
-    python linear_predict.py ../datasets/cleavable/data/clv_dataset.txt ../datasets/cleavable/predict_results/clv_predicted_res.txt ../datasets/cleavable/model/clv_model.pt 0
-    ```
+clv_predictions=pDeepXL.predict.predict_single(prec_charge,instrument,NCE_low,NCE_medium,NCE_high,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2)
+pDeepXL.plot.plot_single(title,prec_charge,crosslinker,seq1,mods1,linksite1,seq2,mods2,linksite2,clv_predictions[2],path_clv_fig)
+```
 
-2. After that, a predicted result file will be generated in the `path_predict_result_file` you specified. In the result file, the last two columns (`seq1_pred_b1b2y1y2`, `seq2_pred_b1b2y1y2`) are the predicted intensity matrix for alpha peptide and beta peptide, respectively. For non-cleavable cross-linkers, only the first four rows of the intensity matrix are valid, and they are `b+`, `b++`, `y+`, and `y++` successively. For cleavable cross-linkers, all eight rows are valid, and they are `b+`, `b++`, `y+`, `y++`, `bS+`, `bS++`, `yS+`, and `yS++`successively. For more details, please see Supplementary Figure 2 of the manuscript.
+### Batch prediction
 
-3. Goto the `pDeepXL/visualize` folder, and run `plot_csm.py` with following parameters to generate images of predicted MS/MS spectra according to the predicted results:
+If you want to predict spectra for many cross-linked peptide pairs, batch prediction is a better and more efficient way to do this. Before batch prediction, please prepare a data file containing all cross-linked peptide pairs you want to predict. In the data file, one line for one cross-linked peptide pair, and the column header is: `title	scan	charge	instrument	NCE_low	NCE_medium	NCE_high	crosslinker	seq1	mods1	linksite1	seq2	mods2	linksite2`, which is separated by the tab `\t`. These parameters have been described in the [Single prediction](#Single-prediction) section. Below is a demo table, and you can find the example non-cleavable data file from [here](https://github.com/pFindStudio/pDeepXL/blob/master/pDeepXL/examples/non_cleavable/data/non_clv_dataset.txt), and the example cleavable data file from [here](https://github.com/pFindStudio/pDeepXL/blob/master/pDeepXL/examples/cleavable/data/clv_dataset.txt).
 
-    ```
-    python plot_csm.py path_predict_result_file path_img_folder
-    ```
 
-    where:
-    * `path_predict_result_file` is the path of predicted result file generated in step 1
-    * `path_img_folder` is the path of the folder where you want to place images for predicted MS/MS spectra. If the folder does not exist, we will make the folder for you
+|title|scan|charge|instrument|NCE_low|NCE_medium|NCE_high|crosslinker|seq1|mods1|linksite1|seq2|mods2|linksite2|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|C_Lee_011216_ymitos_WT_Gly_BS3_XL_12_R2.57721.57721.4.0.dta|57721|4|Fusion|0.0|30.0|0.0|DSS|FKYAPGTIVLYAER|{}|1|INELTLLVQKR|{}|9|
+|C_Lee_090916_ymitos_BS3_XL_B13_C1_13_Rep1.14188.14188.3.0.dta|14188|3|Lumos|0.0|30.0|0.0|DSS|KLEDAEGQENAASSE|{}|0|DINLLKNGK|{}|5|
+|ecoli_enri0302_E_bin8_7ul_re.5306.5306.3.0.dta|5306|3|QE|0.0|27.0|0.0|Leiker|LKEIIHQQMGGLR|{8: 'Oxidation[M]'}|1|KPNACK|{4: 'Carbamidomethyl[C]'}|0|
+|ecoli_enri0228_E_bin5_7ul.11740.11740.4.0.dta|11740|4|QE|0.0|27.0|0.0|Leiker|EISCVDSAELGKASR|{3: 'Carbamidomethyl[C]'}|11|KIIIGK|{}|0|
 
-    For example, run the following command for the demo non-cleavable cross-linked dataset (**please use your local paths**):
+#### pDeepXL.predict.predict_batch
 
-    ```
-    python plot_csm.py ../datasets/non_cleavable/predict_results/non_clv_predicted_res.txt ../datasets/non_cleavable/predict_results/imgs
-    ```
+Use the function `pDeepXL.predict.predict_batch` for batch prediction.
 
-    or run the following command for the demo cleavable cross-linked dataset (**please use your local paths**):
+```python
+predictions=pDeepXL.predict.predict_batch(path_data_file, is_non_cleavable)
+```
 
-    ```
-    python plot_csm.py ../datasets/cleavable/predict_results/clv_predicted_res.txt ../datasets/cleavable/predict_results/imgs
-    ```
+The arguments contain information about the input data:
 
-4. 
-    After that, images of predicted spectra for all cross-linked peptide pairs will be generated in the `path_img_folder` you specified. The name of each image is the `title` of each line in `path_data_file`. Here are two examples, one for DSS and the other for DSSO.
+* **path_data_file** (str): the path of the data file, whose format likes the table above, and please make sure the `title` is unique for each line.
+* **is_non_cleavable** (bool): whether the data is cross-linked by non-cleavable or cleavable cross-linkers. `True` for non-cleavable and `False` for cleavable. Please note that one data file could not contain both non-cleavable and cleavable cross-linked peptide pairs.
 
-    ![HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png](http://pfind.ict.ac.cn/software/pDeepXL/imgs/HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png)
+Return value is a tuple containing all predicted spectra. 
 
-    ![HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png](http://pfind.ict.ac.cn/software/pDeepXL/imgs/HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png)
+#### pDeepXL.predict.save_result_batch
+
+Before spectra plot, please save prediction results to a file, which will be used to plot spectra subsequently. Use the function `pDeepXL.predict.save_result_batch` to save the batch prediction results.
+
+```python
+pDeepXL.predict.save_result_batch(path_result_file, predictions)
+```
+
+The arguments contain information about the result file path and the prediction results:
+
+* **path_result_file** (str): the path of the result file to be generated.
+* **predictions** (tuple): the batch prediction results returned by the function `pDeepXL.predict.predict_batch`.
+
+#### pDeepXL.plot.plot_batch
+
+Then, use the function `pDeepXL.plot.plot_batch` to batch plot all predicted spectra.
+
+```python
+pDeepXL.plot.plot_batch(path_result_file, path_img_folder)
+```
+
+The arguments contain information about the result file path and the image folder path:
+
+* **path_result_file** (str): the path of the result file generated by the function `pDeepXL.predict.save_result_batch`.
+* **path_img_folder** (str): the path of the image folder about to contain all predicted spectra.
+
+#### pDeepXL.predict.generate_spectra_library
+
+In batch prediction mode, you can also save the prediction results to a spectra library file. The supported spectra library format includes `*.blib` and `*.msp`.
+
+Use the function `pDeepXL.predict.generate_spectra_library` to generate a spectra library file from prediction results.
+
+```python
+pDeepXL.predict.generate_spectra_library(path_spectra_library_file, library_format, predictions)
+```
+
+The arguments contain information about the spectra library file and the prediction results:
+
+* **path_spectra_library_file** (str): the path of the spectra library file to be generated.
+* **library_format** (str): the spectra library format. Only formats in ['blib','msp'] are supported.
+* **predictions** (tuple): the batch prediction results returned by the function `pDeepXL.predict.predict_batch`.
+
+#### Demonstration
+
+For example, run the following python script to batch predict and plot the demo non-cleavable cross-linked dataset, and then save the prediction results to a `blib` spectra library file (**please use your local path**):
+
+```python
+# --- non cleavable cross-linked example ----
+# please use your local path
+path_non_clv_data_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/data/non_clv_dataset.txt'
+path_non_clv_result_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/predict_results/non_clv_predicted_res.txt'
+path_non_clv_img_folder=r'/pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/predict_results/imgs'
+
+non_clv_predictions=pDeepXL.predict.predict_batch(path_non_clv_data_file, True)
+pDeepXL.predict.save_result_batch(path_non_clv_result_file, non_clv_predictions)
+pDeepXL.plot.plot_batch(path_non_clv_result_file, path_non_clv_img_folder)
+
+non_clv_library_format='blib'
+path_non_clv_spectra_library_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/predict_results/non_clv_spectra_library.blib'
+pDeepXL.predict.generate_spectra_library(path_non_clv_spectra_library_file, non_clv_library_format, non_clv_predictions)
+```
+
+Run the following python script to batch predict and plot the demo cleavable cross-linked dataset, and then save the prediction results to a `msp` spectra library file (**please use your local path**):
+
+```python
+# --- cleavable cross-linked example ----
+path_clv_data_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/data/clv_dataset.txt'
+path_clv_result_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/clv_predicted_res.txt'
+path_clv_img_folder=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/imgs'
+
+clv_predictions=pDeepXL.predict.predict_batch(path_clv_data_file, False)
+pDeepXL.predict.save_result_batch(path_clv_result_file, clv_predictions)
+pDeepXL.plot.plot_batch(path_clv_result_file, path_clv_img_folder)
+
+clv_library_format='msp'
+path_clv_spectra_library_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/clv_spectra_library.msp'
+pDeepXL.predict.generate_spectra_library(path_clv_spectra_library_file, clv_library_format, clv_predictions)
+```
+
+## Command line mode
+
+For ordinary users who know little about programming, pDeepXL also provides the interactive command line mode. Only batch prediction is available for the command line mode.
+
+### Batch prediction
+
+After installation of pDeepXL from PyPI, pDeepXL provides two command line entry points. You can run pDeepXL directly in the command line window without python programming.
+
+#### pDeepXL_predict_save_batch
+
+Use the command `pDeepXL_predict_save_batch` to batch predict and save the prediction results to file or spectra library.
+
+```shell
+pDeepXL_predict_save_batch path_data_file is_non_cleavable path_result_file save_format
+```
+
+The command accepts four arguments:
+
+* **path_data_file** (str): the path of the data file.
+* **is_non_cleavable** (int): whether the data is cross-linked by non-cleavable or cleavable cross-linkers. 1 for non-cleavable and 0 for cleavable.
+* **path_result_file** (str): the path of the prediction result file to be generated.
+* **save_format** (str): the format of the prediction result file. If you want to generate spectra library file, set it as `blib` or `msp`, otherwise, just set it as `txt`.
+
+
+#### pDeepXL_predict_save_plot_batch
+
+Use the command `pDeepXL_predict_save_plot_batch` if you also want to batch plot all predicted spectra.
+
+```shell
+pDeepXL_predict_save_plot_batch path_data_file is_non_cleavable path_result_file save_format path_img_folder
+```
+
+The command accepts five arguments, including four arguments same to the command `pDeepXL_predict_save_batch`:
+
+* **path_img_folder** (str): the path of the image folder about to contain all predicted spectra.
+
+
+#### Demonstration
+
+For example, run the following command to batch predict the demo non-cleavable cross-linked dataset, and then save the prediction results to a `msp` spectra library file (**please use your local path**):
+
+```shell
+# --- non cleavable cross-linked example ----
+# please use your local path
+pDeepXL_predict_save_batch /pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/data/non_clv_dataset.txt 1 /pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/predict_results/non_clv_predicted_res.txt msp
+```
+
+Run the following command to batch predict and plot the demo cleavable cross-linked dataset, and DO NOT save the prediction results to a spectra library file (**please use your local path**):
+
+```python
+# --- cleavable cross-linked example ----
+# please use your local path
+pDeepXL_predict_save_plot_batch /pFindStudio/pDeepXL/pDeepXL/examples/cleavable/data/clv_dataset.txt 0 /pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/clv_predicted_res.txt txt /pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/imgs
+```
+
+ Here are two examples of predicted spectra, one for DSS and the other for DSSO.
+
+![HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL/examples/non_cleavable/predict_results/imgs/HEK293_DSS_FAIMS_405060_Fr1.36531.36531.4.0.dta.png)
+
+![HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL/examples/cleavable/predict_results/imgs/HEK293_FAIMS_60_70_80_Fr2.32448.32448.3.0.dta.png)
 
 
 ## Citation
 
 ```
-pDeepXL: MS/MS spectrum prediction for cross-linked peptide pairs by deep learning, under review.
+pDeepXL: MS/MS spectrum prediction for cross-linked peptide pairs by deep learning. under review.
 ```
