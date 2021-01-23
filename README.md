@@ -4,9 +4,17 @@
 
 In cross-linking mass spectrometry, identification of cross-linked peptide pairs heavily relies on similarity measurements between experimental spectra and theoretical ones. The lack of accurate ion intensities in theoretical spectra impairs the performances of search engines for cross-linked peptide pairs, especially at proteome scales. Here, we introduce pDeepXL, a deep neural network to predict MS/MS spectra of cross-linked peptide pairs. We used the transfer learning technique to train pDeepXL, facilitating the training with limited benchmark data of cross-linked peptide pairs. Test results on over ten datasets showed that pDeepXL accurately predicted spectra of both non-cleavable DSS/BS3/Leiker cross-linked peptide pairs (>80% of predicted spectra have Pearson correlation coefficients (PCCs) higher than 0.9), and cleavable DSSO/DSBU cross-linked peptide pairs (>75% of predicted spectra have PCCs higher than 0.9). Furthermore, we showed that accurate prediction was achieved for unseen datasets using an online fine-tunning technique. Finally, integrating pDeepXL into a database search engine increased the number of identified cross-linked spectra by 18% on average.
 
-## Download
+## Installation
 
-Please download pDeepXL from [https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip), which contains the source code and test datasets.
+pDeepXL can be installed from PyPI:
+
+`pip install pDeepXL`
+
+During installation, all required dependencies will be installed automatically.
+
+Please also download the example dataset from here, which will be used in the following tutorial.
+
+pDeepXL from [https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL.zip), which contains the source code and test datasets.
 
 
 ## Dependencies
