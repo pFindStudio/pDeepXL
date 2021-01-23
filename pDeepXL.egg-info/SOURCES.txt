@@ -1,6 +1,7 @@
 README.md
 setup.py
 pDeepXL/__init__.py
+pDeepXL/console_wapper.py
 pDeepXL/featurer.py
 pDeepXL/mass_util.py
 pDeepXL/model.py
@@ -10,6 +11,7 @@ pDeepXL/utils.py
 pDeepXL.egg-info/PKG-INFO
 pDeepXL.egg-info/SOURCES.txt
 pDeepXL.egg-info/dependency_links.txt
+pDeepXL.egg-info/entry_points.txt
 pDeepXL.egg-info/top_level.txt
 pDeepXL/configs/aa.ini
 pDeepXL/configs/config.ini

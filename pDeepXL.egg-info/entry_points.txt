@@ -1,0 +1,4 @@
+[console_scripts]
+pDeepXL_predict_save_batch = pDeepXL.console_wapper:predict_save_batch
+pDeepXL_predict_save_plot_batch = pDeepXL.console_wapper:predict_save_plot_batch
+

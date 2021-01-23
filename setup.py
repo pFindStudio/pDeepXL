@@ -16,7 +16,7 @@ extra_files = package_files('pDeepXL/examples')
 
 setuptools.setup(
     name="pDeepXL",
-    version="1.1.2",
+    version="1.1.3",
     author="Zhenlin Chen",
     author_email="chenzhenlin@ict.ac.cn",
     description="MS/MS spectrum prediction for cross-linked peptide pairs by deep learning",
@@ -25,6 +25,12 @@ setuptools.setup(
     url="https://github.com/pFindStudio/pDeepXL",
     packages=setuptools.find_packages(),
     package_data={'pDeepXL': ['configs/*','pt/*'] + extra_files},
+    entry_points={
+    'console_scripts': [
+        'pDeepXL_predict_save_batch=pDeepXL.console_wapper:predict_save_batch',
+        'pDeepXL_predict_save_plot_batch=pDeepXL.console_wapper:predict_save_plot_batch',
+        ],
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

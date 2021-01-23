@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pDeepXL
-Version: 1.1.2
+Version: 1.1.3
 Summary: MS/MS spectrum prediction for cross-linked peptide pairs by deep learning
 Home-page: https://github.com/pFindStudio/pDeepXL
 Author: Zhenlin Chen
