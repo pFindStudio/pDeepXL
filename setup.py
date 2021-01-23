@@ -16,7 +16,7 @@ extra_files = package_files('pDeepXL/examples')
 
 setuptools.setup(
     name="pDeepXL",
-    version="1.1.3",
+    version="1.1.4",
     author="Zhenlin Chen",
     author_email="chenzhenlin@ict.ac.cn",
     description="MS/MS spectrum prediction for cross-linked peptide pairs by deep learning",
@@ -37,4 +37,14 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    install_requires=[
+        'tqdm',
+        'numpy',
+        'matplotlib',
+        'seaborn',
+        'scikit-learn',
+        'scipy',
+        'torch',
+        'torchvision',
+    ],
 )

@@ -1,15 +1,3 @@
-def hello_world():
-    print("Hello world")
-
-def find_max():
-    import sys
-    arg1, arg2 = sys.argv[1], sys.argv[2]
-    ans=max(int(arg1),int(arg2))
-    print(ans)
-    return ans
-
-
-
 import pDeepXL.predict
 import pDeepXL.plot
 import sys
@@ -27,10 +15,10 @@ def predict_save_batch():
         is_non_cleavable = True if tmp==1 else False
         print('is_non_cleavable=%d'%is_non_cleavable)
         
-        valid_formats=set(['txt','blib','msp'])
+        valid_formats=set(['txt','mgf','blib','msp'])
         save_format=save_format.strip().lower()
         if save_format not in valid_formats:
-            print('sorry, %s format is not supported.'%save_format)
+            print('sorry, spectra library format %s is not supported.'%save_format)
             return
     else:
         print('no command arguments, or #args !=4.') # 用户只需要输入4个参数，对非计算机人员友好
@@ -45,7 +33,7 @@ def predict_save_batch():
     else:
         pDeepXL.predict.save_result_batch(path_result_file+'.txt', predictions)
         # save to other format
-
+        pDeepXL.predict.generate_spectra_library(path_result_file,predictions)
 
     
 def predict_save_plot_batch():
@@ -61,10 +49,10 @@ def predict_save_plot_batch():
         is_non_cleavable = True if tmp==1 else False
         print('is_non_cleavable=%d'%is_non_cleavable)
         
-        valid_formats=set(['txt','blib','msp'])
+        valid_formats=set(['txt','mgf','blib','msp'])
         save_format=save_format.strip().lower()
         if save_format not in valid_formats:
-            print('sorry, %s format is not supported.'%save_format)
+            print('sorry, spectra library format %s is not supported.'%save_format)
             return
     else:
         print('no command arguments, or #args !=5.') # 用户只需要输入5个参数，对非计算机人员友好
@@ -80,6 +68,8 @@ def predict_save_plot_batch():
     else:
         path_txt=path_result_file+'.txt'
         pDeepXL.predict.save_result_batch(path_txt, predictions)
+        
         # save to other format
+        pDeepXL.predict.generate_spectra_library(path_result_file,predictions)
 
     pDeepXL.plot.plot_batch(path_txt, path_img_folder)

@@ -231,3 +231,34 @@ def save_result_batch(path, predicted_results):
     print('write done')
 
 #----------------------------------------------------------------
+
+
+
+
+
+#--------------------- generate spectra library ---------------------
+
+def generate_mgf_library(path, predicted_results):
+    pass
+
+
+def generate_blib_library(path, predicted_results):
+    pass
+
+
+def generate_msp_library(path, predicted_results):
+    pass
+
+
+def generate_spectra_library(path, format, predicted_results):
+    if format=='mgf':
+        generate_mgf_library(path, predicted_results)
+    elif format=='blib':
+        generate_blib_library(path, predicted_results)
+    elif format=='msp':
+        generate_msp_library(path, predicted_results)
+    else:
+        print('sorry, spectra library format %s is not supported.'%format)
+        return
+
+#----------------------------------------------------------------

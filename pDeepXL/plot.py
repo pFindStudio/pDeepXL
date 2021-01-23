@@ -1,8 +1,6 @@
 # 批量画交联的肽谱匹配图
 
 import os
-import sys
-sys.path.append("..")
 import pDeepXL.utils as utils
 import pDeepXL.mass_util as mass_util
 import matplotlib
