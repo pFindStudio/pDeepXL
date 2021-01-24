@@ -1,18 +1,40 @@
 # pDeepXL: MS/MS spectrum prediction for cross-linked peptide pairs by deep learning
 
+Table of Contents
+=================
+* [Introduction](#introduction)
+* [Installation](#installation)
+* [Script mode](#script-mode)
+    * [Single prediction](#single-prediction)
+        * [pDeepXL.predict.predict_single](#pdeepxlpredictpredict_single)
+        * [pDeepXL.plot.plot_single](#pdeepxlplotplot_single)
+        * [Demonstration](#demonstration)
+    * [Batch prediction](#batch-prediction)
+        * [pDeepXL.predict.predict_batch](#pdeepxlpredictpredict_batch)
+        * [pDeepXL.predict.save_result_batch](#pdeepxlpredictsave_result_batch)
+        * [pDeepXL.plot.plot_batch](#pdeepxlplotplot_batch)
+        * [pDeepXL.predict.generate_spectra_library](#pdeepxlpredictgenerate_spectra_library)
+        * [Demonstration](#demonstration-1)
+* [Command line mode](#command-line-mode)
+    * [Batch prediction](#batch-prediction-1)
+        * [pDeepXL_predict_save_batch](#pdeepxl_predict_save_batch)
+        * [pDeepXL_predict_save_plot_batch](#pdeepxl_predict_save_plot_batch)
+        * [Demonstration](#demonstration-2)
+* [Citation](#citation)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 ## Introduction
 
 In cross-linking mass spectrometry, identification of cross-linked peptide pairs heavily relies on similarity measurements between experimental spectra and theoretical ones. The lack of accurate ion intensities in theoretical spectra impairs the performances of search engines for cross-linked peptide pairs, especially at proteome scales. Here, we introduce pDeepXL, a deep neural network to predict MS/MS spectra of cross-linked peptide pairs. We used the transfer learning technique to train pDeepXL, facilitating the training with limited benchmark data of cross-linked peptide pairs. Test results on over ten datasets showed that pDeepXL accurately predicted spectra of both non-cleavable DSS/BS3/Leiker cross-linked peptide pairs (>80% of predicted spectra have Pearson correlation coefficients (PCCs) higher than 0.9), and cleavable DSSO/DSBU cross-linked peptide pairs (>75% of predicted spectra have PCCs higher than 0.9). Furthermore, we showed that accurate prediction was achieved for unseen datasets using an online fine-tunning technique. Finally, integrating pDeepXL into a database search engine increased the number of identified cross-linked spectra by 18% on average.
 
 ## Installation
 
-Please install pDeepXL from PyPI:
+Please install pDeepXL from PyPI. During installation, all required dependencies will be installed automatically. 
 
 ```shell
 pip install pDeepXL
 ```
-
-During installation, all required dependencies will be installed automatically. 
 
 Please also download example datasets from [here](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL/examples/examples.zip), which will be used in the following tutorial. There are two example datasets in the downloaded zip file, one is for non-cleavable cross-linkers DSS/Leiker (`examples/non_cleavable`), and the other is for cleavable cross-linkers DSSO/DSBU (`examples/cleavable`). For each dataset, there are 2 folders: the `data` folder contains 1 file with 15 cross-linked peptide pairs, and the `predict_results` folder contains predicted MS/MS spectra and the corresponding images.
 
@@ -191,6 +213,7 @@ Run the following python script to batch predict and plot the demo cleavable cro
 
 ```python
 # --- cleavable cross-linked example ----
+# please use your local path
 path_clv_data_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/data/clv_dataset.txt'
 path_clv_result_file=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/clv_predicted_res.txt'
 path_clv_img_folder=r'/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/imgs'
