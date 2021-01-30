@@ -16,7 +16,7 @@ extra_files = package_files('pDeepXL/examples')
 
 setuptools.setup(
     name="pDeepXL",
-    version="1.1.4",
+    version="1.2.0",
     author="Zhenlin Chen",
     author_email="chenzhenlin@ict.ac.cn",
     description="MS/MS spectrum prediction for cross-linked peptide pairs by deep learning",

@@ -33,7 +33,7 @@ def predict_save_batch():
     else:
         pDeepXL.predict.save_result_batch(path_result_file+'.txt', predictions)
         # save to other format
-        pDeepXL.predict.generate_spectra_library(path_result_file,predictions)
+        pDeepXL.predict.generate_spectra_library(path_result_file,save_format,predictions)
 
     
 def predict_save_plot_batch():
@@ -70,6 +70,6 @@ def predict_save_plot_batch():
         pDeepXL.predict.save_result_batch(path_txt, predictions)
         
         # save to other format
-        pDeepXL.predict.generate_spectra_library(path_result_file,predictions)
+        pDeepXL.predict.generate_spectra_library(path_result_file,save_format,predictions)
 
     pDeepXL.plot.plot_batch(path_txt, path_img_folder)

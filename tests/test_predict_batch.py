@@ -13,7 +13,7 @@ pDeepXL.plot.plot_batch(path_non_clv_result_file, path_non_clv_img_folder)
 
 non_clv_library_format='blib'
 path_non_clv_spectra_library_file=r'/data/zlchen/pDeepXL/code/test_pip/pFindStudio/pDeepXL/pDeepXL/examples/non_cleavable/predict_results/non_clv_spectra_library.blib'
-# pDeepXL.predict.generate_spectra_library(path_non_clv_spectra_library_file, non_clv_library_format, non_clv_predictions)
+pDeepXL.predict.generate_spectra_library(path_non_clv_spectra_library_file, non_clv_library_format, non_clv_predictions)
 
 
 
@@ -28,4 +28,4 @@ pDeepXL.plot.plot_batch(path_clv_result_file, path_clv_img_folder)
 
 clv_library_format='msp'
 path_clv_spectra_library_file=r'/data/zlchen/pDeepXL/code/test_pip/pFindStudio/pDeepXL/pDeepXL/examples/cleavable/predict_results/clv_spectra_library.msp'
-# pDeepXL.predict.generate_spectra_library(path_clv_spectra_library_file, clv_library_format, clv_predictions)
+pDeepXL.predict.generate_spectra_library(path_clv_spectra_library_file, clv_library_format, clv_predictions)
