@@ -175,7 +175,7 @@ The arguments contain information about the result file path and the image folde
 
 #### pDeepXL.predict.generate_spectra_library
 
-In batch prediction mode, you can also save the prediction results to a spectra library file. The supported spectra library format includes `*.blib` and `*.msp`.
+In batch prediction mode, you can also save the prediction results to a spectra library file. Supported spectra library format includes `*.blib` and `*.msp`.
 
 Use the function `pDeepXL.predict.generate_spectra_library` to generate a spectra library file from prediction results.
 
@@ -186,8 +186,10 @@ pDeepXL.predict.generate_spectra_library(path_spectra_library_file, library_form
 The arguments contain information about the spectra library file and the prediction results:
 
 * **path_spectra_library_file** (str): the path of the spectra library file to be generated.
-* **library_format** (str): the spectra library format. Only formats in ['blib','msp'] are supported.
+* **library_format** (str): the spectra library format. Only formats in ['blib','msp'] are supported. Please see [here](https://skyline.ms/wiki/home/software/BiblioSpec/page.view?name=BiblioSpec%20input%20and%20output%20file%20formats) for description of `*.blib` format, and see [here](http://www.matrixscience.com/msparser/help/group__spectral_library_classes.html) for description of `*.msp` format.
 * **predictions** (tuple): the batch prediction results returned by the function `pDeepXL.predict.predict_batch`.
+
+Please note that the current version of `*.blib` and `*.msp` formats have no definition for a cross-linked peptide pair. We use `seq1(linksite1)-crosslinker-seq2(linksite2)` to represent a cross-linked peptide pair, where the `linksite` starts from 0 (zero-based numbering). For example, `DFWSNFKEEVK(6)-DSSO-HFGKIINK(3)` means that the 7th site of peptide `DFWSNFKEEVK` crosslinks to the 4th site of peptide `HFGKIINK` by `DSSO`.
 
 #### Demonstration
 
