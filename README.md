@@ -36,7 +36,7 @@ Please install pDeepXL from PyPI. During installation, all required dependencies
 pip install pDeepXL
 ```
 
-Please also download example datasets from [here](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL/examples/examples.zip), which will be used in the following tutorial. There are two example datasets in the downloaded zip file, one is for non-cleavable cross-linkers DSS/Leiker (`examples/non_cleavable`), and the other is for cleavable cross-linkers DSSO/DSBU (`examples/cleavable`). For each dataset, there are 2 folders: the `data` folder contains 1 file with 15 cross-linked peptide pairs, and the `predict_results` folder contains predicted MS/MS spectra and the corresponding images.
+Please also download example datasets from [here](https://github.com/pFindStudio/pDeepXL/raw/master/pDeepXL/examples/examples.zip), which will be used in the following tutorial. There are two example datasets in the downloaded zip file, one is for non-cleavable cross-linkers DSS/Leiker (`examples/non_cleavable`), and the other is for cleavable cross-linkers DSSO/DSBU (`examples/cleavable`). For each dataset, there are 2 folders: the `data` folder contains 1 file with 15 cross-linked peptide pairs, and the `predict_results` folder contains predicted MS/MS spectra, spectra library, and the corresponding images.
 
 ## Script mode
 
@@ -61,7 +61,7 @@ The arguments contain information about the input cross-linked peptide pair:
 
 * **prec_charge** (int): the precursor charge of the cross-linked peptide pair. Only charges in [2+, 5+] are supported.
 * **instrument** (str): the mass spectrometer name. Only instruments in ['QEPlus','QE','QEHF','QEHFX','Fusion','Lumos'] are supported.
-* **NCE_low, NCE_medium, NCE_high** (floats): the low, medium, and high normalized collision energies (NCE). Only NCEs in [0.0, 100.0] are supported.
+* **NCE_low, NCE_medium, NCE_high** (floats): the low, medium, and high normalized collision energies (NCE). Only NCEs in [0.0, 100.0] are supported. If single NCE was used, please set it as NCE_medium, and set the NCE_low and NCE_high as zeros. If stepped-NCE was used, please set three NCEs accordingly.
 * **crosslinker** (str): the cross-linker name. Only cross-linkers in ['DSS','Leiker','DSSO','DSBU'] are supported.
 * **seq1** (str): the first sequence.
 * **mods1** (dict): the modifications on the first sequence, where the key is the position (zero-based numbering) of a modification, and the value is the corresponding modification name. For example, `{3: 'Carbamidomethyl[C]'}` means Carbamidomethyl modified the 4th Cys. Only modifications in ['Carbamidomethyl[C]','Oxidation[M]'] are support.
