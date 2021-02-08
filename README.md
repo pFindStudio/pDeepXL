@@ -261,7 +261,7 @@ Use the command `pDeepXL_predict_save_plot_batch` if you also want to batch plot
 pDeepXL_predict_save_plot_batch path_data_file is_non_cleavable path_result_file save_format path_img_folder
 ```
 
-The command accepts five arguments, including four arguments same to the command `pDeepXL_predict_save_batch`:
+The command accepts five arguments, including four arguments same to the command `pDeepXL_predict_save_batch` and the following one:
 
 * **path_img_folder** (str): the path of the image folder about to contain all predicted spectra.
 
